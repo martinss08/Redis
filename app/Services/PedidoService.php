@@ -3,6 +3,8 @@
 namespace App\Services;
 use App\Models\Pedido;
 use App\Redis\RedisManagerService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class PedidoService
 {
@@ -14,7 +16,12 @@ class PedidoService
     
     public function getAll()
     {
-        return $this->model->all();
+        return Cache::remember('pedidos_all', 100, function () {
+
+            Log::info('Entrou no callback');
+
+            return $this->model->all()->toArray();
+        });
     }
 
     public function create(array $data)

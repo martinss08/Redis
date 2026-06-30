@@ -18,7 +18,7 @@ class PedidosController extends Controller
     {
         $pedidos = $this->pedidoService->getAll();
 
-        if ($pedidos->isEmpty()) {
+        if (empty($pedidos)) {
             return $this->notFound(404, 'Nenhum pedido encontrado');
         }
 
@@ -33,10 +33,4 @@ class PedidosController extends Controller
 
         return $this->sucesso($pedidos, 201, "Pedido criado com sucesso");
     }
-
-    // public function update()
-    // {}
-
-    // public function destroy()
-    // {}
 }
